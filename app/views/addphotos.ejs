@@ -1,0 +1,25 @@
+<%- include('./partials/header') %>
+    <h3>Cette page ne doit etre accessible qu'à l'admin !!!!</h3>
+ 
+  
+  <form action="/admin/addphotos" method="POST" enctype="multipart/form-data">
+  
+  <div>
+    <label for="photo"> Choisir un fichier</label>
+   <input type="file" name="gallery" id="photo" accept="image/png, image/jpeg" multiple>
+</div> 
+
+<div>
+  <label for="albumphoto">Nom de l'album photo auquel on veut ajouter des photos:</label>
+  <select name="galerie_id" id="galerie">
+    <% for (const galerie of galeries) { %>
+      <option value="<%=galerie.id%>"><%=galerie.name%></option>
+      <% } %>
+  </select>
+</div>
+
+<div><button>Envoyer</button></div>
+</form>
+
+<button><a href="/admin"> retour </a></button>
+<%- include('./partials/footer') %>
