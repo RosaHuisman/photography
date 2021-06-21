@@ -8,3 +8,20 @@
     <title>Site test</title>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="/">Accueil</a>
+            <% if(user) { %>
+                <a href="/profile">Mon compte</a>
+                <a href="/myphotos">Mes photos</a>
+                <a href="/disconnect">Déconnexion</a>
+                <% if(user.role == "admin") { %>
+                    <a href="/admin">Admin</a>
+                <% } %>
+            <% } else {%>
+                <a href="/signup">S'inscrire</a>
+                <a href="/login">Se connecter</a>
+            <% } %>
+        </nav>
+
+    </header>

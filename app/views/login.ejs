@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<div >
+  <h2 >Se connecter </h2>
+  <p >Une fois votre séance photo réalisée, et vos photos optimisées, vous pourrez les voir sur votre espace personnel en vous connectant ici avec les informations de connection fournies par votre photographe.</p>
+  <p>Vous serez invité(e) à changer votre mot de passe à la première connexion</p>
+</div>
+
+<% if(locals.error) { %>
+  <div class="row">
+    <div class="error">
+      <%= error %>
+    </div>
+  </div>
+<% } %>
+
+<div>
+  <div>
+    <form action="" method="POST" class="form-signup">
+
+      <div>
+        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+          placeholder="Votre courriel">
+        <label for="email">Votre courriel</label>
+      </div>
+
+      <div>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de passe">
+        <label for="password">Votre mot de passe</label>
+      </div>
+     
+      <button type="submit">Se connecter</button>
+    </form>
+  </div>
+</div>
+<%- include('partials/footer') %>

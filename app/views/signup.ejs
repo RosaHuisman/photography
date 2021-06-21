@@ -1,0 +1,55 @@
+<%- include('partials/header') %>
+
+<div>
+  <h2>ACCESSIBLE QUE A L'ADMIN</h2>
+  <p>Pour créer un compte pour les clients !</p>
+  <p> Bcrypt utilise les mots de passes cryptés. A la création d'un nouveau compte, bcryp se charge de le crypter. Il n'est pas possible de se connecter avec un mot de passe enregistré soi meme dans la BDD</p>
+</div>
+
+
+<form action="/admin/createuser" method="POST" class="form-signin">
+
+  <% if(locals.error) { %>
+    <div>
+      <div>
+        <%= error %>
+      </div>
+    </div>
+  <% } %>
+
+  <div>
+    <input type="lastname"  id="lastname" name="lastname" aria-describedby="lastnameHelp"
+      placeholder="Votre nom">
+      <label for="lastname">Nom</label>
+  </div>
+
+  <div>
+    <input type="firstname" id="firstname" name="firstname" aria-describedby="firstnameHelp"
+      placeholder="Votre prénom">
+      <label for="firstname">Prénom</label>
+  </div>
+
+  <div>
+    <input type="email" id="email" name="email" aria-describedby="emailHelp"
+      placeholder="Votre courriel">
+      <label for="email">Adresse mail</label>
+  </div>
+
+  <div>
+    <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de mot de passe">
+    <label for="password">Mot de mot de passe</label>
+  </div>
+
+
+  <div>
+    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
+      placeholder="Confirmez votre mot de passe">
+      <label for="passwordConfirm">Confirmez lemot de passe</label>
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+  </div>
+</form>
+
+<%- include('partials/footer') %>

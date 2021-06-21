@@ -6,7 +6,7 @@ const { Photos, Galerie, User } = require('../../models');
 
 module.exports = {
     adminPage: (request, response) => {
-        response.render('admin')
+        response.render('admin/admin')
     },
 
 }

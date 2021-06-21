@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+
+  <h3>Cette page ne doit etre accessible qu'à l'admin !!!!</h3>
+
+  <form action="/admin/deletegalerie" method="POST">
+
+<%if (locals.success) {%>
+  <p><%=success%></p>
+  <% } %>
+
+           
+              <div>
+              <label for="creator">galerie à supprimer :</label>
+              <select name="galerie_id" id="galerie">
+                <% for (const galerie of galeries) { %>
+                  <option value="<%=galerie.id%>">
+                    <%=galerie.name%>
+                  </option>
+                  <% } %>
+              </select>
+            </div> 
+          
+
+            <div><button type="submit">Envoyer</button></div>
+
+
+  </form>
+
+  <button><a href="/admin"> retour </a></button>
+
+
+  <%- include('../partials/footer') %>

@@ -1,0 +1,34 @@
+<%- include('./partials/header') %>
+    <h3>Cette page ne doit etre accessible qu'à l'admin !!!!</h3>
+ 
+  
+  <form action="/myphotos" method="POST">
+  
+  
+<div>
+  <label for="albumphoto">Galerie dont on veut afficher les photos</label>
+  <select name="galerie_id" id="galerie">
+    <% for (const galerie of galeries) { %>
+      <option value="<%=galerie.id%>"><%=galerie.name%></option>
+      <% } %>
+  </select>
+</div>
+
+<div><button>Envoyer</button></div>
+</form>
+<div class="galerie">
+<%if (locals.photos) {%>
+    <% for (const photo of photos) { %>
+    <div class="photo">
+      <img class="image" src="/images/<%= photo.name %>" alt="">
+    </div>
+    
+    
+    <% } %>
+    
+      <% } %>
+    </div>
+    
+    <button><a href="/"> retour </a></button>
+
+<%- include('./partials/footer') %>

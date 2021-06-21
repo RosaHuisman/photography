@@ -9,7 +9,7 @@ module.exports = {
     formCreate: async (request, response) => {
         try {
             const galeries = await Galerie.findAll();
-            response.render('addphotos', { galeries })
+            response.render('admin/addphotos', { galeries })
 
         } catch (error) {
             console.error(error)
@@ -28,7 +28,7 @@ module.exports = {
                 });
             const galeries = await Galerie.findAll();
 
-            response.render('addphotos', {
+            response.render('admin/addphotos', {
                 success,
                 galeries,
                 file: 'uploads/${request.file.filename}' })
@@ -44,7 +44,7 @@ module.exports = {
 
             const galeries = await Galerie.findAll();
 
-            response.render('showphotos', { galeries })
+            response.render('admin/showphotos', { galeries })
 
         } catch (error) {
             console.error(error)
@@ -62,7 +62,7 @@ module.exports = {
                     },
 
                 })
-            response.render('showphotos', { galeries, photos })
+            response.render('admin/showphotos', { galeries, photos })
 
         } catch (error) {
             console.error(error)
