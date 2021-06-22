@@ -10,7 +10,7 @@ const app = express();
 const userMiddleware = require('./app/middlewares/user');
 
 
-app.use(express.static('./app/static'));
+app.use(express.static('./static/'));
 
 app.set('view engine', 'ejs');
 app.set('views', './app/views');

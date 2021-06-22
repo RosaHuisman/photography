@@ -52,7 +52,7 @@ const userController = {
 
       // on attend que l'utilisateur soit enregistré
       await newUser.save();
-      res.render('admin');
+      res.render('admin/admin');
     } catch (err) {
       console.trace(err);
       res.status(500).send(err);

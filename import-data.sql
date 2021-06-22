@@ -34,8 +34,9 @@ CREATE TABLE "photos" (
 
 
 INSERT INTO "user" ("firstname", "lastname", "email", "password", "role") VALUES
-('atchoum', 'laposte', 'zoo@ok.fr', 'supermotdepasse', 'admin'),
-('Divines', 'Torres', 'multi@rkd.fr', 'supermotdepasse', 'admin');
+('Toto', 'Tata', 'toto@tata.fr', 'supermotdepasse', 'admin'),
+('Chuck', 'Norris', 'chuck@norris.fr', 'supermotdepasse', 'user'),
+('Rosa', 'Huisman', 'rosahuisman@hotmail.fr', '$2b$10$bamnOjmuJ4HErU8B8yXcF.M278BsB/wpUF3IBdHyqD8Ih1nD/oe4q', 'admin');
 
 
 

@@ -10,7 +10,7 @@ const userController = require('./controllers/userController');
 const adminMiddleware = require('./middlewares/admin');
 
 const multer  = require('multer')
-const upload = multer({ dest: 'app/static/images/' })
+const upload = multer({ dest: 'static/uploads/' })
 
 
 const router = express.Router();

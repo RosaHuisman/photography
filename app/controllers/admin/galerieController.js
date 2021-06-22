@@ -55,7 +55,7 @@ module.exports = {
 
             photos.forEach(photo => {
                 console.log(photo)
-                const path = `app/static/images/${photo.name}`
+                const path = `static/uploads/${photo.name}`
                 console.log(path)
                 fs.unlinkSync(path)
             });
