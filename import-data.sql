@@ -13,7 +13,8 @@ CREATE TABLE "user" (
   "lastname" TEXT NULL,
   "role" TEXT DEFAULT 'user',
   "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
-  "updatedAt" TIMESTAMP
+  "updatedAt" TIMESTAMP,
+  "status" INTEGER DEFAULT 0
 );
 
 CREATE TABLE "galerie" (
@@ -33,10 +34,10 @@ CREATE TABLE "photos" (
 );
 
 
-INSERT INTO "user" ("firstname", "lastname", "email", "password", "role") VALUES
-('Toto', 'Tata', 'toto@tata.fr', 'supermotdepasse', 'admin'),
-('Chuck', 'Norris', 'chuck@norris.fr', 'supermotdepasse', 'user'),
-('Rosa', 'Huisman', 'rosahuisman@hotmail.fr', '$2b$10$bamnOjmuJ4HErU8B8yXcF.M278BsB/wpUF3IBdHyqD8Ih1nD/oe4q', 'admin');
+INSERT INTO "user" ("firstname", "lastname", "email", "password", "role", "status") VALUES
+('Toto', 'Tata', 'toto@tata.fr', 'supermotdepasse', 'admin', 0),
+('Chuck', 'Norris', 'chuck@norris.fr', 'supermotdepasse', 'user', 0),
+('Rosa', 'Huisman', 'rosahuisman@hotmail.fr', '$2b$10$bamnOjmuJ4HErU8B8yXcF.M278BsB/wpUF3IBdHyqD8Ih1nD/oe4q', 'admin', 0);
 
 
 

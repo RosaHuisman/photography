@@ -37,16 +37,13 @@ const userController = {
       if (req.session.user.role === 'admin') {
         return res.redirect('/admin')
       }
-
-      console.log(req.session.user.createdAt)
-      console.log(req.session.user.updatedAt)
-
-      if (req.session.user.createdAt === req.session.user.updatedAt) {
+      console.log(req.session.user.status)
+      if (req.session.user.status === 0) {
         console.log('on va maintenant pouvoir aller sur la page changement mot de passe')
-        //return res.redirect('/changepassword')
+        return res.redirect('/changepassword')
       } else {
         console.log('on va aller sur la page accueil profil')
-      //return res.redirect('/profile');
+      return res.redirect('/profile');
       }
     } catch (err) {
       console.trace(err);
@@ -118,12 +115,21 @@ const userController = {
     });
   },
 
-  changePassword: async (req, res, next) => {
+   changePassword: async (req, res, next) => {
+   console.log(req.session.user)
+    try {
     if (!req.session.user) {
       return res.redirect('/login');
     }
-    res.render('changepassword')
+    
 
+    res.render('changepassword', {
+      user: req.session.user
+    })
+   } catch (err) {
+    console.trace(err);
+    res.status(500).send(err);
+  }
   },
 
   actionChangePassword: async (req, res, next) => {
@@ -156,14 +162,15 @@ const userController = {
 
 
       await User.update(
-        {password: encryptedPassword},
+        {password: encryptedPassword,
+        status: 1},
         {where: {
           id: req.session.user.id
         },
       
       });
       res.render('changepassword', {
-        succes: "Mot de passe changé"
+        succes: "Mot de passe changé avec succès"
       });
 
     } catch (err) {

@@ -16,7 +16,8 @@ User.init({
   password: DataTypes.STRING,
   firstname: DataTypes.STRING,
   lastname: DataTypes.STRING,
-  role: DataTypes.STRING
+  role: DataTypes.STRING,
+  status: DataTypes.INTEGER
 }, {
   sequelize,
   tableName: "user"
