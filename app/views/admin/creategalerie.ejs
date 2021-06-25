@@ -17,7 +17,7 @@
               <select name="user_id" id="creator">
                 <% for (const user of users) { %>
                   <option value="<%=user.id%>">
-                    <%=user.firstname%>
+                    <%=user.firstname%> <%=user.lastname%>
                   </option>
                   <% } %>
               </select>

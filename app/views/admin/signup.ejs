@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
 <div>
   <h2>ACCESSIBLE QUE A L'ADMIN</h2>
@@ -7,12 +7,19 @@
 </div>
 
 
-<form action="/admin/createuser" method="POST" class="form-signin">
+<form action="/admin/createuser" method="POST">
 
   <% if(locals.error) { %>
     <div>
       <div>
         <%= error %>
+      </div>
+    </div>
+  <% } %>
+  <% if(locals.succes) { %>
+    <div>
+      <div>
+        <%= succes%>
       </div>
     </div>
   <% } %>
@@ -52,4 +59,4 @@
   </div>
 </form>
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>

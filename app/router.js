@@ -22,7 +22,10 @@ router.post('/login', userController.loginAction);
 router.get('/disconnect', userController.disconnect);
 router.get('/profile', userController.profilePage);
 router.get('/myphotos', userController.showPhotos);
-router.post('/myphotos', userController.postShowPhotos)
+router.post('/myphotos', userController.postShowPhotos);
+router.get('/myaccount', userController.myAccount);
+router.get('/changepassword', userController.changePassword);
+router.post('/changepassword', userController.actionChangePassword);
 
 
 // admin
@@ -41,8 +44,8 @@ router.route('/admin/showphotos')
     .post(adminMiddleware, photosController.postShowPhotos)
 
 router.route('/admin/createuser')
-    .get(adminMiddleware, userController.signupPage)
-    .post(adminMiddleware, userController.signupAction);
+    .get(adminMiddleware, mainAdminController.signupPage)
+    .post(adminMiddleware, mainAdminController.signupAction);
 
 router.route('/admin/deletegalerie')
     .get(adminMiddleware, galerieController.delete)

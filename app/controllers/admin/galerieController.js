@@ -3,12 +3,13 @@ dotenv.config();
 const fs = require('fs')
 
 
+
 const { Photos, Galerie, User } = require('../../models');
 
 module.exports = {
 
     formCreate: async (request, response) => {
-        const users = await User.findAll();
+        const users = await User.findAll({ order: [[ 'createdAt', 'DESC' ]] });
         response.render('admin/creategalerie', { users });
     },
 

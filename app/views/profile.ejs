@@ -2,27 +2,14 @@
 
 <div >
   <h2 >Mon Compte</h2>
-  <p>Mes informations sur O'quizz !</p>
+ <h3>Bienvenue <%= user.firstname %> <%= user.lastname %></h3>
 </div>
 
+<button><a href="/changepassword">Changer mon mot de passe</a></button>
+<button><a href="/myphotos">Voir mes galeries photos</a></button>
+<button><a href="/myaccount">Voir les informations de mon compte</a></button>
+<button><a href="/disconnect">Me déconnecter</a></button>
 
-<div >
-  <div >
-    <label >Nom</label>
-    <div><%= user.lastname %></div>
-  </div>
-  <div >
-    <label>Prénom</label>
-    <div><%= user.firstname %></div>
-  </div>
-  <div>
-    <label>Email</label>
-    <div><%= user.email %></div>
-  </div>
-  <div>
-    <label>Role</label>
-    <div><%= user.role %></div>
-  </div>
-</div>
+
 
 <%- include('partials/footer') %>

@@ -1,63 +1,7 @@
 const { User, Photos, Galerie } = require('../models/');
-const emailValidator = require('email-validator');
 const bcrypt = require('bcrypt');
 
 const userController = {
-
-  signupPage: (req, res) => {
-    res.render('signup');
-  },
-
-  signupAction: async (req, res) => {
-    try {
-      // les vérifs à faire : 
-
-      // - 1: l'utilisateur existe déjà
-      const user = await User.findOne({
-        where: {
-          email: req.body.email
-        }
-      });
-      if (user) {
-        return res.render('signup', {
-          error: "Cet email est déjà utilisé par un utilisateur."
-        });
-      }
-      // - 2: format d'email valide
-      if (!emailValidator.validate(req.body.email)) {
-        return res.render('signup', {
-          error: "Cet email n'est pas valide."
-        });
-      }
-
-      // - 3: le mdp et la confirmation ne correspondent pas
-      if (req.body.password !== req.body.passwordConfirm) {
-        return res.render('signup', {
-          error: "La confirmation du mot de passe ne correspond pas."
-        });
-      }
-      // - 4: Si on avait le courage, vérifier que le mdp répond aux recommendations CNIL...
-
-      // 5 - On crypt
-      const salt = await bcrypt.genSalt(10);
-      const encryptedPassword = await bcrypt.hash(req.body.password, salt);
-
-      // Si on est tout bon, on crée le User !
-      const newUser = new User({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: encryptedPassword
-      });
-
-      // on attend que l'utilisateur soit enregistré
-      await newUser.save();
-      res.render('admin/admin');
-    } catch (err) {
-      console.trace(err);
-      res.status(500).send(err);
-    }
-  },
 
   loginPage: (req, res) => {
     res.render('login');
@@ -90,9 +34,20 @@ const userController = {
       req.session.user = user;
       //... mais on supprime son mdp !
       delete req.session.user.password;
-      // et on repart sur la page d'accueil
-      return res.redirect('/');
+      if (req.session.user.role === 'admin') {
+        return res.redirect('/admin')
+      }
 
+      console.log(req.session.user.createdAt)
+      console.log(req.session.user.updatedAt)
+
+      if (req.session.user.createdAt === req.session.user.updatedAt) {
+        console.log('on va maintenant pouvoir aller sur la page changement mot de passe')
+        //return res.redirect('/changepassword')
+      } else {
+        console.log('on va aller sur la page accueil profil')
+      //return res.redirect('/profile');
+      }
     } catch (err) {
       console.trace(err);
       res.status(500).send(err);
@@ -119,9 +74,9 @@ const userController = {
       return res.redirect('/login');
     }
 
-   const galeries = await Galerie.findAll({
-     where: {user_id: req.session.user.id}
-   })
+    const galeries = await Galerie.findAll({
+      where: { user_id: req.session.user.id }
+    })
 
     res.render('lookphotos', {
       user: req.session.user, galeries
@@ -134,23 +89,89 @@ const userController = {
     }
 
 
-  try {
-    const galeries = await Galerie.findAll({
-      where: {user_id: req.session.user.id}});
+    try {
+      const galeries = await Galerie.findAll({
+        where: { user_id: req.session.user.id }
+      });
 
-    const photos = await Photos.findAll(
-       {
-            where: {
-               galerie_id: req.body.galerie_id
-            },
+      const photos = await Photos.findAll(
+        {
+          where: {
+            galerie_id: req.body.galerie_id
+          },
 
-       })
-    res.render('lookphotos', { galeries, photos })
+        })
+      res.render('lookphotos', { galeries, photos })
 
-} catch (error) {
-    console.error(error)
-}
-},
+    } catch (error) {
+      console.error(error)
+    }
+  },
+
+  myAccount: async (req, res, next) => {
+    if (!req.session.user) {
+      return res.redirect('/login');
+    }
+
+    res.render('myaccount', {
+      user: req.session.user
+    });
+  },
+
+  changePassword: async (req, res, next) => {
+    if (!req.session.user) {
+      return res.redirect('/login');
+    }
+    res.render('changepassword')
+
+  },
+
+  actionChangePassword: async (req, res, next) => {
+
+    try {
+      if (!req.session.user) {
+        return res.redirect('/login');
+      }
+      //const user = await User.findByPK(req.session.user.id);
+
+      const validPwd = await bcrypt.compare(req.body.oldPassword, req.session.user.password);
+      if (!validPwd) {
+        return res.render('changepassword', {
+          error: "Ce n'est pas votre ancien mot de passe"
+        });
+      }
+
+      if (req.body.newPassword !== req.body.newPasswordConfirm) {
+        return res.render('changepassword', {
+          error: "La confirmation du nouveau mot de passe ne correspond pas."
+        });
+      }
+      // - 4: Si on avait le courage, vérifier que le mdp répond aux recommendations CNIL...
+
+      // 5 - On crypt
+      const salt = await bcrypt.genSalt(10);
+      const encryptedPassword = await bcrypt.hash(req.body.newPassword, salt);
+
+      // chercher le user en question et lui changer son mot de passe avec password: encryptedpassword
+
+
+      await User.update(
+        {password: encryptedPassword},
+        {where: {
+          id: req.session.user.id
+        },
+      
+      });
+      res.render('changepassword', {
+        succes: "Mot de passe changé"
+      });
+
+    } catch (err) {
+      console.trace(err);
+      res.status(500).send(err);
+    }
+
+  },
 
 
 };

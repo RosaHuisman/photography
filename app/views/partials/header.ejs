@@ -11,13 +11,13 @@
     <header>
         <nav>
             <a href="/">Accueil</a>
-            <% if(user) { %>
-                <a href="/profile">Mon compte</a>
+            <% if(user.role == "user") { %>
+                <a href="/profile">Accueil de mon espace</a>
                 <a href="/myphotos">Mes photos</a>
                 <a href="/disconnect">Déconnexion</a>
-                <% if(user.role == "admin") { %>
-                    <a href="/admin">Admin</a>
-                <% } %>
+                <% } else if (user.role == "admin") { %>
+                <a href="/admin">Admin</a>
+                <a href="/disconnect">Déconnexion</a>
             <% } else {%>
                 <a href="/signup">S'inscrire</a>
                 <a href="/login">Se connecter</a>
