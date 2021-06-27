@@ -42,21 +42,24 @@
       <label for="email">Adresse mail</label>
   </div>
 
-  <div>
-    <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de mot de passe">
-    <label for="password">Mot de mot de passe</label>
+  <div id="form-container">
+    <!-- <input type="password" class="form-control" id="password" name="password"> -->
+    <label for="password"><button type="button" id="generate-password">Generer un mot de passe aléatoire</button>
+    </label>
   </div>
 
 
+<!-- 
   <div>
     <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
       placeholder="Confirmez votre mot de passe">
       <label for="passwordConfirm">Confirmez lemot de passe</label>
   </div>
-
+-->
   <div>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit">Envoyer</button>
   </div>
 </form>
+
 
 <%- include('../partials/footer') %>

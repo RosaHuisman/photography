@@ -21,15 +21,17 @@ const userController = {
           error: "Cet email n'existe pas."
         });
       }
-
-      // Si on a un utilisateur, on teste si le mot de passe est valide
-      const validPwd = await bcrypt.compare(req.body.password, user.password);
-      if (!validPwd) {
-        return res.render('login', {
-          error: "Ce n'est pas le bon mot de passe."
-        });
-      }
-
+      console.log(user)
+      if (user.status != 0) {
+            // Si on a un utilisateur, on teste si le mot de passe est valide
+            const validPwd = await bcrypt.compare(req.body.password, user.password);
+      
+            if (!validPwd) {
+              return res.render('login', {
+                error: "Ce n'est pas le bon mot de passe."
+              });
+            }
+          }
       // si tout va bien, on met l'utilisateur en session...
       req.session.user = user;
       //... mais on supprime son mdp !
@@ -43,7 +45,7 @@ const userController = {
         return res.redirect('/changepassword')
       } else {
         console.log('on va aller sur la page accueil profil')
-      return res.redirect('/profile');
+        return res.redirect('/profile');
       }
     } catch (err) {
       console.trace(err);
@@ -115,21 +117,20 @@ const userController = {
     });
   },
 
-   changePassword: async (req, res, next) => {
-   console.log(req.session.user)
+  changePassword: async (req, res, next) => {
+    console.log(req.session.user)
     try {
-    if (!req.session.user) {
-      return res.redirect('/login');
-    }
-    
+      if (!req.session.user) {
+        return res.redirect('/login');
+      }
 
-    res.render('changepassword', {
-      user: req.session.user
-    })
-   } catch (err) {
-    console.trace(err);
-    res.status(500).send(err);
-  }
+      res.render('changepassword', {
+        user: req.session.user
+      })
+    } catch (err) {
+      console.trace(err);
+      res.status(500).send(err);
+    }
   },
 
   actionChangePassword: async (req, res, next) => {
@@ -140,12 +141,16 @@ const userController = {
       }
       //const user = await User.findByPK(req.session.user.id);
 
-      const validPwd = await bcrypt.compare(req.body.oldPassword, req.session.user.password);
-      if (!validPwd) {
-        return res.render('changepassword', {
-          error: "Ce n'est pas votre ancien mot de passe"
-        });
+      if (req.session.user.status != 0) {
+
+        const validPwd = await bcrypt.compare(req.body.oldPassword, req.session.user.password);
+        if (!validPwd) {
+          return res.render('changepassword', {
+            error: "Ce n'est pas votre ancien mot de passe"
+          });
+        }
       }
+
 
       if (req.body.newPassword !== req.body.newPasswordConfirm) {
         return res.render('changepassword', {
@@ -161,14 +166,22 @@ const userController = {
       // chercher le user en question et lui changer son mot de passe avec password: encryptedpassword
 
 
-      await User.update(
-        {password: encryptedPassword,
-        status: 1},
-        {where: {
-          id: req.session.user.id
+      const passwordChanged = await User.update(
+        {
+          password: encryptedPassword,
+          status: 1
         },
-      
-      });
+        {
+          where: {
+            id: req.session.user.id
+          },
+
+        });
+
+      if (passwordChanged) {
+        res.redirect('/profile')
+      }
+
       res.render('changepassword', {
         succes: "Mot de passe changé avec succès"
       });

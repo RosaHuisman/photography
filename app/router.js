@@ -51,7 +51,9 @@ router.route('/admin/deletegalerie')
     .get(adminMiddleware, galerieController.delete)
     .post(adminMiddleware, galerieController.postdelete)
 
-
+router.route('/admin/sendmailclient')
+    .get(adminMiddleware, mainAdminController.sendMail)
+    .post(adminMiddleware, mainAdminController.sendMailAction);
 
 
 module.exports = router; 

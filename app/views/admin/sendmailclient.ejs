@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+
+<%if (locals.error) {%>
+  <p><%=error%></p>
+  <% } %>
+
+  <form action="/admin/sendmailclient" method="POST">
+    <div>
+      <label for="client">Nom du client :</label>
+      <select name="user_id" id="creator">
+        <% for (const user of users) { %>
+          <option value="<%=user.id%>">
+            <%=user.firstname%>
+              <%=user.lastname%>
+          </option>
+          <% } %>
+      </select>
+    </div>
+    <button type="submit">Choisir ce client</button>
+  </form>
+
+  <%if (locals.choosenclient) {%>
+    <a href="mailto:<%= choosenclient.email %>?subject=Votre mot de passe provisoire&body=Bonjour <%= choosenclient.firstname %> <%= choosenclient.lastname %>.%0D%0A%0D%0A Voici votre mot de passe provisoire pour vos photos : -   <%= choosenclient.password %>   -. %0D%0A%0D%0A Il vous sera demandé de le remplacer lors de votre première connexion. %0D%0A%0D%0APour vous connecter à votre compte, cliquez ici">Envoyer un mail à <%= choosenclient.firstname %> <%= choosenclient.lastname %> avec son mdp provisoire </a>
+    <% } %>
+
+
+      <%- include('../partials/footer') %>

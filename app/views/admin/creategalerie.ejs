@@ -4,27 +4,30 @@
 
   <form action="/admin/creategalerie" method="POST">
 
-<%if (locals.success) {%>
-  <p><%=success%></p>
-  <% } %>
+    <%if (locals.success) {%>
+      <p>
+        <%=success%>
+      </p>
+      <% } %>
 
-            <div>
-              <label for="name"> Nom de la nouvelle galerie :</label>
-              <input type="name" name="name" id="name" value="">
-            </div>
-              <div>
-              <label for="creator">créée pour:</label>
-              <select name="user_id" id="creator">
-                <% for (const user of users) { %>
-                  <option value="<%=user.id%>">
-                    <%=user.firstname%> <%=user.lastname%>
-                  </option>
-                  <% } %>
-              </select>
-            </div> 
-          
+        <div>
+          <label for="name"> Nom de la nouvelle galerie :</label>
+          <input type="name" name="name" id="name" value="">
+        </div>
+        <div>
+          <label for="creator">créée pour:</label>
+          <select name="user_id" id="creator">
+            <% for (const user of users) { %>
+              <option value="<%=user.id%>">
+                <%=user.firstname%>
+                  <%=user.lastname%>
+              </option>
+              <% } %>
+          </select>
+        </div>
 
-            <div><button type="submit">Envoyer</button></div>
+
+        <div><button type="submit">Envoyer</button></div>
 
 
   </form>
@@ -33,7 +36,7 @@
     <button><a href="/admin/addphotos">Ajouter des photos</a></button>
     <% } %>
 
-  <button><a href="/admin"> retour </a></button>
+      <button><a href="/admin"> retour </a></button>
 
 
-  <%- include('../partials/footer') %>
+      <%- include('../partials/footer') %>
