@@ -1,5 +1,7 @@
 const { User, Photos, Galerie } = require('../models/');
 const bcrypt = require('bcrypt');
+const emailValidator = require('email-validator');
+
 
 const userController = {
 
@@ -23,15 +25,15 @@ const userController = {
       }
       console.log(user)
       if (user.status != 0) {
-            // Si on a un utilisateur, on teste si le mot de passe est valide
-            const validPwd = await bcrypt.compare(req.body.password, user.password);
-      
-            if (!validPwd) {
-              return res.render('login', {
-                error: "Ce n'est pas le bon mot de passe."
-              });
-            }
-          }
+        // Si on a un utilisateur, on teste si le mot de passe est valide
+        const validPwd = await bcrypt.compare(req.body.password, user.password);
+
+        if (!validPwd) {
+          return res.render('login', {
+            error: "Ce n'est pas le bon mot de passe."
+          });
+        }
+      }
       // si tout va bien, on met l'utilisateur en session...
       req.session.user = user;
       //... mais on supprime son mdp !
@@ -87,7 +89,6 @@ const userController = {
       return res.redirect('/login');
     }
 
-
     try {
       const galeries = await Galerie.findAll({
         where: { user_id: req.session.user.id }
@@ -99,8 +100,11 @@ const userController = {
             galerie_id: req.body.galerie_id
           },
 
-        })
-      res.render('lookphotos', { galeries, photos })
+        });
+      const currentGalerie = await Galerie.findOne({
+        where: { id: req.body.galerie_id }
+      });
+      res.render('lookphotos', { galeries, photos, currentGalerie })
 
     } catch (error) {
       console.error(error)
@@ -191,6 +195,79 @@ const userController = {
       res.status(500).send(err);
     }
 
+  },
+
+  changeInfosUser: async (req, res, next) => {
+    try {
+      if (!req.session.user) {
+        return res.redirect('/login');
+      }
+
+      if (!emailValidator.validate(req.body.email)) {
+        return res.render('myaccount', {
+          error: "Cet email n'est pas valide."
+        });
+      }
+      if (req.body.email != req.body.emailConfirm) {
+        return res.render('myaccount', {
+          error: "Votre email ne correspond pas à sa validation"
+        });
+      }
+
+      const oldEmail = req.session.user.email
+      console.log(oldEmail)
+
+      if (oldEmail === req.body.email) {
+        const changeInfosUser = await User.update(
+          {
+            lastname: req.body.lastname,
+            firstname: req.body.firstname,
+            email: req.body.email.toLowerCase()
+          },
+          {
+            where: {
+              id: req.session.user.id
+            },
+          });
+
+        const userModified = await User.findOne({
+          where: {
+            email: req.body.email
+          }
+        })
+        req.session.user = userModified
+
+        res.render('myaccount', {
+          succes: 'Vos modifications ont bien été prises en compte',
+          lastname: req.body.lastname,
+          firstname: req.body.firstname
+        });
+
+      } else {
+
+        const changeInfosUser = await User.update(
+          {
+            lastname: req.body.lastname,
+            firstname: req.body.firstname,
+            email: req.body.email.toLowerCase()
+          },
+          {
+            where: {
+              id: req.session.user.id
+            },
+          });
+        // si tout va bien, on enregistre ces nouvelles infos en session
+        req.session.user = changeInfosUser;
+
+        res.render('login', {
+          message: 'Vos informations de connexion ont changé, veuillez vous reconnecter'
+        });
+      }
+
+    } catch (err) {
+      console.trace(err);
+      res.status(500).send(err);
+    }
   },
 
 

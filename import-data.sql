@@ -35,27 +35,15 @@ CREATE TABLE "photos" (
 
 
 INSERT INTO "user" ("firstname", "lastname", "email", "password", "role", "status") VALUES
-('Toto', 'Tata', 'toto@tata.fr', 'supermotdepasse', 'admin', 0),
-('Chuck', 'Norris', 'chuck@norris.fr', 'supermotdepasse', 'user', 0),
-('Rosa', 'Huisman', 'rosahuisman@hotmail.fr', '$2b$10$bamnOjmuJ4HErU8B8yXcF.M278BsB/wpUF3IBdHyqD8Ih1nD/oe4q', 'admin', 0);
-
+('Rosa', 'Huisman', 'rosahuisman@hotmail.fr', '$2b$10$bamnOjmuJ4HErU8B8yXcF.M278BsB/wpUF3IBdHyqD8Ih1nD/oe4q', 'admin', 0),
+('Chuck', 'Norris', 'chuck@norris.fr', 'supermotdepasse', 'user', 0);
 
 
 INSERT INTO "galerie" ("name", "user_id") VALUES
-('rosa', 1),
-('laura', 1),
-('vera', 1);
+('test', 1);
 
 INSERT INTO "photos" ("name", "galerie_id") VALUES
-('photo1', 1),
-('photo2', 1),
-('photo3', 1),
-('photo4', 2),
-('photo5', 2),
-('photo6', 2),
-('photo7', 3),
-('photo8', 3),
-('photo9', 3);
+('photo1', 1);
 
 
 COMMIT;

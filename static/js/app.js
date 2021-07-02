@@ -1,9 +1,10 @@
 const app = {
-    
-    generateRandomPassword : () => {
+
+    generateRandomPassword: () => {
         const generatePasswordElem = document.getElementById('generate-password')
-        console.log(generatePasswordElem)
-        generatePasswordElem.addEventListener('click', app.randomstring);
+        if (generatePasswordElem) {
+            generatePasswordElem.addEventListener('click', app.randomstring);
+        }
     },
 
     randomstring: () => {
@@ -17,14 +18,11 @@ const app = {
         // générer qu'UN SEUl mot de passe aléatoire:
         const generatePasswordElem = document.getElementById('generate-password')
         generatePasswordElem.removeEventListener('click', app.randomstring);
-
-
     },
-    
+
     init: () => {
         console.log('app.init!');
         app.generateRandomPassword();
-
     }
 
 };

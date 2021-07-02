@@ -1,34 +1,75 @@
 <%- include('./partials/header') %>
-    <h3>Cette page ne doit etre accessible qu'à l'admin !!!!</h3>
- 
-  
+
   <form action="/myphotos" method="POST">
-  
-  
-<div>
-  <label for="albumphoto">Galerie dont on veut afficher les photos</label>
-  <select name="galerie_id" id="galerie">
-    <% for (const galerie of galeries) { %>
-      <option value="<%=galerie.id%>"><%=galerie.name%></option>
-      <% } %>
-  </select>
-</div>
 
-<div><button>Envoyer</button></div>
-</form>
-<div class="galerie">
-<%if (locals.photos) {%>
-    <% for (const photo of photos) { %>
-    <div class="photo">
-      <img class="image" src="/uploads/<%= photo.name %>" alt="">
+    <div class="row m-2">
+      <div class="col-auto align-self-center">
+        <label class="h5 " for="galerie">Choisir la galerie :</label>
+      </div>
+      <div class="col-auto align-self-center">
+        <select name="galerie_id" id="galerie" class="form-select form-select-lg">
+          <% for (const galerie of galeries) { %>
+            <option value="<%=galerie.id%>">
+              <%=galerie.name%>
+            </option>
+            <% } %>
+        </select>
+      </div>
+      <div class="col-auto align-self-center">
+        <button class="btn btn-info">Afficher</button>
+      </div>
     </div>
-    
-    
-    <% } %>
-    
-      <% } %>
-    </div>
-    
-    <button><a href="/profile"> retour </a></button>
 
-<%- include('./partials/footer') %>
+
+    
+  </form>
+  <div class="galerie">
+    <%if (locals.photos) {%>
+      <h3>Gallerie photo de : <%= currentGalerie.name %>
+      </h3>
+
+      <div class="container">
+        <div class="card-columns">
+
+          <% for (const photo of photos) { %>
+            <div class="card">
+              <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
+                data-image="/uploads/<%= photo.name %>" data-target="#image-gallery">
+                <img src="/uploads/<%= photo.name %>" class="photo w-100" alt="<%= photo.name %>">
+              </a>
+            </div>
+            <% } %>
+        </div>
+      </div>
+
+      <!-- MODAL affichage Gallerie-->
+      <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg w-75 mx-auto">
+          <div class="modal-content">
+
+            <div class="modal-body">
+              <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+            </div>
+
+
+            <a class="carousel-control-prev" role="button" id="show-previous-image">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-control-next" id="show-next-image" role="button">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+
+
+          </div>
+        </div>
+      </div>
+      <% } %>
+
+
+        <button><a href="/profile"> retour </a></button>
+
+        <%- include('./partials/footer') %>

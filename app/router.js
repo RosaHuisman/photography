@@ -24,6 +24,7 @@ router.get('/profile', userController.profilePage);
 router.get('/myphotos', userController.showPhotos);
 router.post('/myphotos', userController.postShowPhotos);
 router.get('/myaccount', userController.myAccount);
+router.post('/myaccount', userController.changeInfosUser);
 router.get('/changepassword', userController.changePassword);
 router.post('/changepassword', userController.actionChangePassword);
 

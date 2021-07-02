@@ -1,26 +1,118 @@
 <%- include('partials/header') %>
 
-<div >
-  <h2 >Mon Compte</h2>
-</div>
-
-
-<div >
-  <div >
-    <label >Nom</label>
-    <div><%= user.lastname %></div>
-  </div>
-  <div >
-    <label>Prénom</label>
-    <div><%= user.firstname %></div>
-  </div>
   <div>
-    <label>Email</label>
-    <div><%= user.email %></div>
+    <h2>Mon Compte</h2>
   </div>
-  
-</div>
+
+  <% if(locals.error) { %>
+    <div class="alert alert-danger" role="alert">
+      <%= error %>
+    </div>
+    <% } %>
+      <% if(locals.succes) { %>
+        <div class="alert alert-success" role="alert">
+          <%= succes %>
+
+        </div>
+
+        <% } %>
+
+          <div class="row m-2">
+            <div class="col-auto">
+              <label>Nom :</label>
+            </div>
+
+            <div class="col-auto">
+              <% if(locals.succes) { %>
+                <%= lastname %>
+                  <% } else { %>
+                    <%= user.lastname %>
+                      <% } %>
+            </div>
+          </div>
+
+          <div class="row m-2">
+            <div class="col-auto">
+              <label>Prénom :</label>
+            </div>
+            <div class="col-auto">
+              <% if(locals.succes) { %>
+                <%= firstname %>
+                  <% } else {%>
+                    <%= user.firstname %>
+                      <% } %>
+            </div>
+          </div>
+          <div class="row m-2">
+            <div class="col-auto">
+              <label>Email :</label>
+            </div>
+            <div class="col-auto">
+              <%= user.email %>
+            </div>
+          </div>
+
+
+          <div class="row m-2">
+            <div class="col-auto">
+              <button><a class="button" href="#" data-toggle="modal" data-title=""
+                  data-target="#update-user-infos">Modifier mes informations</a></button>
+
+            </div>
+            <div class="col-auto">
+              <button><a href="/changepassword">Changer mon mot de passe</a></button>
+            </div>
+          </div>
 
 
 
-<%- include('partials/footer') %>
+
+
+
+          <!-- MODAL affichage Changement des infos user-->
+          <form action="/myaccount" method="POST">
+            <div class="modal fade" id="update-user-infos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-lg w-75 mx-auto">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4>Modifiez vos informations</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Merci de renseigner tous les champs</p>
+
+                    
+                    <div class="row">
+                      <div class="col mb-3">
+                        <label for="lastname">Nom :</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname">
+                      </div>
+                      <div class="col mb-3">
+                        <label for="firstname">Prénom :</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col mb-3">
+                        <label for="email">Adresse mail :</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                      </div>
+                      <div class="col mb-3">
+                        <label for="emailConfirm">Validez votre adresse mail :</label>
+                        <input type="email" class="form-control" id="emailConfirm" name="emailConfirm">
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
+                        aria-hidden="true">Annuler</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                  </div>
+                </div>
+              </div>
+          </form>
+
+          <%- include('partials/footer') %>

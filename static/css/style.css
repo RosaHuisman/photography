@@ -1,9 +1,23 @@
-.image {
-    width: 300px;
-}
 
-.galerie {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
+
+.photo {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+.photo:hover {opacity: 0.7;}
+
+.btn:focus, .btn:active, button:focus, button:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  #image-gallery .modal-footer{
+    display: block;
+  }
+  
+  .thumb{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }

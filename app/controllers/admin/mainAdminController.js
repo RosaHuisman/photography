@@ -57,7 +57,7 @@ module.exports = {
       const newUser = new User({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         password: req.body.password
         //password: encryptedPassword
       });

@@ -14,9 +14,15 @@
   </div>
 <% } %>
 
+<% if(locals.message) { %>
+    <div class="alert alert-primary" role="alert">
+      <%= message %>
+  </div>
+<% } %>
+
 <div>
   <div>
-    <form action="" method="POST" class="form-signup">
+    <form action="/login" method="POST" class="form-signup">
 
       <div>
         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
