@@ -8,14 +8,10 @@ const { Photos, Galerie, User } = require('../../models');
 
 module.exports = {
 
-    formCreate: async (request, response) => {
-        const users = await User.findAll({ order: [[ 'createdAt', 'DESC' ]] });
-        response.render('admin/creategalerie', { users });
-    },
-
     addOne: async (request, response, next) => {
         try {
-            const success = "galerie créée";
+            const succes = "galerie créée";
+
             const createGalerie = await Galerie.create({
                 name: request.body.name,
                 user_id: request.body.user_id
@@ -23,12 +19,12 @@ module.exports = {
             if (createGalerie) {
                 const users = await User.findAll();
 
-                response.render('admin/creategalerie', { success, users, createGalerie })
+                response.render('admin/admin', { succes, users, createGalerie })
 
             } else {
                 const users = await User.findAll();
 
-                response.render('admin/creategalerie', { users })
+                response.render('admin/admin', { users, error: "erreur dans la création de galerie" })
             }
 
         } catch (error) {

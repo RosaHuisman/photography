@@ -6,32 +6,27 @@ const { Photos, Galerie, User } = require('../../models');
 
 module.exports = {
 
-    formCreate: async (request, response) => {
-        try {
-            const galeries = await Galerie.findAll();
-            response.render('admin/addphotos', { galeries })
-
-        } catch (error) {
-            console.error(error)
-        }
-    },
-
-    add: async (request, response) => {
+    add: async (request, response, next) => {
 
         try {
-            const success = "photos rajoutées"
+            const succes = "photos rajoutées"
+            console.log(request.files)
             request.files.forEach(file => {
                 Photos.create({
                     name: file.filename,
                     galerie_id: request.body.galerie_id
                 })
-                });
+            });
             const galeries = await Galerie.findAll();
+            const users = await User.findAll();
 
-            response.render('admin/addphotos', {
-                success,
+
+            response.render('admin/admin', {
+                succes,
                 galeries,
-                file: 'uploads/${request.file.filename}' })
+                file: 'uploads/${request.file.filename}',
+                users
+            })
 
         } catch (error) {
             console.error(error)

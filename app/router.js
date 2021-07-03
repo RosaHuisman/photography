@@ -1,7 +1,7 @@
 const express = require ('express');
 
 const mainController = require('./controllers/mainController')
-const galerieController = require('./controllers/admin/galerieController');
+const galleryController = require('./controllers/admin/galleryController');
 const mainAdminController = require('./controllers/admin/mainAdminController');
 const photosController = require('./controllers/admin/photosController');
 const userController = require('./controllers/userController');
@@ -32,12 +32,10 @@ router.post('/changepassword', userController.actionChangePassword);
 // admin
 router.get('/admin', adminMiddleware, mainAdminController.adminPage);
 
-router.route('/admin/creategalerie')
-    .get(adminMiddleware, galerieController.formCreate)
-    .post(adminMiddleware, galerieController.addOne);
+router.route('/admin/creategallery')
+    .post(adminMiddleware, galleryController.addOne);
 
 router.route('/admin/addphotos')
-    .get(adminMiddleware, photosController.formCreate)
     .post(adminMiddleware, upload.array('gallery'), photosController.add);
 
 router.route('/admin/showphotos') 
@@ -45,12 +43,11 @@ router.route('/admin/showphotos')
     .post(adminMiddleware, photosController.postShowPhotos)
 
 router.route('/admin/createuser')
-    .get(adminMiddleware, mainAdminController.signupPage)
-    .post(adminMiddleware, mainAdminController.signupAction);
+    .post(adminMiddleware, mainAdminController.createUserAction);
 
 router.route('/admin/deletegalerie')
-    .get(adminMiddleware, galerieController.delete)
-    .post(adminMiddleware, galerieController.postdelete)
+    .get(adminMiddleware, galleryController.delete)
+    .post(adminMiddleware, galleryController.postdelete)
 
 router.route('/admin/sendmailclient')
     .get(adminMiddleware, mainAdminController.sendMail)

@@ -7,7 +7,7 @@
 |Client|Modifier le mot de passe à la premiere connexion| Privatiser mon compte | |
 |Client|Accéder à mon compte | Voir et acheter des photos | La fonction achat sera peut etre pour une V2, à voir |
 |Client|Modifier mon compte| Modifier les informations du compte (infos de connexion) | |
-|Client|Supprimer mon compte| Ne plus etre en relation avec le photographe | Cela ne supprimera pas les photos|
+|Client|Supprimer mon compte| Ne plus etre en relation avec le photographe | Cela ne supprimera pas les photos - a voir si nécessaire|
 |||||
 |Admin|Créer un compte pour les clients | Donner accès aux photos | |
 |Admin|Consulter les galeries photos | les consulter | |

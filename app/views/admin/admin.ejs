@@ -1,15 +1,210 @@
 <%- include('../partials/header') %>
 
-<div>
-<button> <a href="/admin/createuser">créer un compte pour le client</a></button>
+    <% if(locals.error) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+        <% } %>
+            <% if(locals.succes) { %>
+                <div class="alert alert-success" role="alert">
+                    <%= succes %>
+                </div>
+                <% } %>
 
-<button><a href="/admin/creategalerie">Créer un nouvel album photos</a></button>
-<button> <a href="/admin/addphotos">Ajouter des photos dans un album</a></button>
-<button> <a href="/admin/showphotos">Afficher les photos d'une gallerie choisie</a></button>
-<button> <a href="/admin/deletegalerie">Supprimer une galerie et ses photos</a></button>
-<button> <a href="/admin/sendmailclient">Envoyer un mail au client avec son mot de passe provisoire</a></button>
 
 
-</div>
-</form>
-<%- include('../partials/footer') %>
+                    <div class="container d-grid gap-3">
+
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <a href="#" class="btn btn-info stretched-link" data-toggle="modal" data-title=""
+                                    data-target="#create-user">Création compte client</a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <a href="#" class="btn btn-info stretched-link" data-toggle="modal" data-title=""
+                                    data-target="#create-gallery">Création du nom de galerie</a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <a href="#" class="btn btn-info stretched-link" data-toggle="modal" data-title=""
+                                    data-target="#add-photos-to-gallery">Rajouter des photos dans
+                                    une galerie</a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <a href="/admin/showphotos" class="btn btn-info stretched-link">Afficher les photos
+                                    d'une galerie choisie</a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <a href="/admin/deletegalerie" class="btn btn-info stretched-link">Supprimer une galerie
+                                    et ses photos</a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <a href="/admin/sendmailclient" class="btn btn-info stretched-link">Envoyer un mail à
+                                    mon client avec son mot de passe
+                                    provisoire</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- MODAL affichage création compte client-->
+                    <form action="/admin/createuser" method="POST">
+
+                        <div class="modal fade" id="create-user" tabindex="-1" role="dialog"
+                            aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg w-75 mx-auto">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Création compte client</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                                <label for="lastname">Nom</label>
+
+                                                <input type="lastname" id="lastname" name="lastname"
+                                                    aria-describedby="lastnameHelp">
+                                            </div>
+
+                                            <div class="col mb-3">
+                                                <label for="firstname">Prénom</label>
+
+                                                <input type="firstname" id="firstname" name="firstname"
+                                                    aria-describedby="firstnameHelp">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3">
+
+                                                <label for="email">Adresse mail</label>
+                                                <input type="email" id="email" name="email"
+                                                    aria-describedby="emailHelp">
+
+                                            </div>
+
+                                            <div class="col mb-3">
+                                                <div id="form-container">
+                                                    <label for="password"><button type="button"
+                                                            id="generate-password">Generer
+                                                            un mot de passe aléatoire</button>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
+                                                    aria-hidden="true">Annuler</span>
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Valider</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- MODAL création d'une galerie-->
+                    <form action="/admin/creategallery" method="POST">
+
+                        <div class="modal fade" id="create-gallery" tabindex="-1" role="dialog"
+                            aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg w-75 mx-auto">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Création d'une galerie</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                                <label for="name"> Nom de la nouvelle galerie :</label>
+                                                <input type="name" name="name" id="name" value="">
+                                            </div>
+
+                                            <div class="col mb-3">
+                                                <label for="creator">créée pour:</label>
+                                                <select name="user_id" id="creator">
+                                                    <% for (const user of users) { %>
+                                                        <option value="<%=user.id%>">
+                                                            <%=user.firstname%>
+                                                                <%=user.lastname%>
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
+                                                aria-hidden="true">Annuler</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Valider</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- MODAL ajout photos dans une galerie-->
+                    <form action="/admin/addphotos" method="POST" enctype="multipart/form-data">
+
+                        <div class="modal fade" id="add-photos-to-gallery" tabindex="-1" role="dialog"
+                            aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg w-75 mx-auto">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Ajout de photos dans une galerie</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                                <label for="photo"> Choisir un fichier</label>
+                                                <input type="file" name="gallery" id="photo"
+                                                    accept="image/png, image/jpeg" multiple>
+                                            </div>
+
+                                            <div class="col mb-3">
+                                                <label for="albumphoto">Nom de l'album photo auquel on veut ajouter des
+                                                    photos:</label>
+                                                <select name="galerie_id" id="galerie">
+                                                    <% for (const galerie of galeries) { %>
+                                                        <option value="<%=galerie.id%>">
+                                                            <%=galerie.name%>
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
+                                                    aria-hidden="true">Annuler</span>
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Valider</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
+                    <%- include('../partials/footer') %>
